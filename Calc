@@ -1,0 +1,107 @@
+#include <stdio.h>
+
+void Write(int random) {
+	//printf("Klappt!"); //Zum Debuggen
+	FILE *DtS;
+	DtS = fopen("Lösungen.txt", "r+");
+	if (DtS == NULL) {
+		printf("FAIL\n");
+	}
+	fprintf(DtS, "%d\n", random);
+	fclose(DtS);
+}
+
+void read() {
+	FILE *DtS2;
+	char text[100 + 1];
+
+	DtS2 = fopen("Aufgaben.txt", "r");
+	if (DtS2 != NULL) {
+		fscanf(DtS2, "%100c", text);
+		text[100] = '\0';
+		printf("%s\n", text);
+		fclose(DtS2);
+	}
+}
+
+void function2() {
+	printf("Vielen dank für das benutzen dieses Produktes!\n");
+	printf("Das Programm wird innerhalb von 5 Sekunden beendet!\n");
+	//sleep (5);
+	void exit(int status);
+}
+
+int main(void) {
+
+	char Text[1000]; //für ganze Formel
+
+	char Var1;
+
+	char LastOp = ' '; //für Operation
+
+	char Textt[1000];
+
+	printf("Willkommen im Taschenrechner!\n");
+//sleep (5);
+
+	printf("Geben Sie bitte die Aufgabe ein: \n");
+	scanf("%s", Text);
+
+	int i = 0; //= Index [Position im Speicher]
+	int Summe = 0; //= für Summe
+	int Zahl1 = 0; //= für 1. Zahl
+
+//Schleife 
+
+	while (i <= 1000 && Text[i] != '\0') {
+		//printf("Aktuelle Summe: %i\n", Summe);
+		//printf("Zahl %c\n", Text[i]); //Zum debuggen
+
+		Var1 = Text[i];
+		switch (Text[i]) {
+		break;
+	case '+':
+		LastOp = '+';
+		Zahl1 = 0;
+		break;
+	case '-':
+		LastOp = '-';
+		Zahl1 = 0;
+		break;
+	default:
+		if (Text[i + 1] != '+' && Text[i + 1] != '-' && Text[i + 1] != '\0') {
+			Zahl1 = (Zahl1 + atoi(&Var1)) * 10;
+		} else {
+			Zahl1 = Zahl1 + atoi(&Var1);
+		}
+
+		printf("%d\n", Zahl1);
+		if (LastOp == ' ') {
+			Summe = Zahl1;
+		}
+		if (LastOp == '+' && !(Text[i + 1] > 47 && Text[i + 1] < 58)) {
+			Summe = Summe + Zahl1;
+		}
+		if (LastOp == '-' && !(Text[i + 1] > 47 && Text[i + 1] < 58)) {
+			Summe = Summe - Zahl1;
+			Zahl1 = 0;
+		}
+
+		}
+
+		i++;
+
+	}
+
+	printf("__________________________\n");
+	printf("Das Ergebnis beträgt: %d\n", Summe);
+	printf("__________________________\n");
+
+	//printf("Klappt!\n"); //zum debuggen
+
+	Write(Summe);
+	read();
+
+	return 0;
+
+}
